@@ -172,6 +172,35 @@ namespace AddressBookCollection
             }
         }
 
+        public static void DeleteContact()
+        {
+            int f = 0;
+            if (contacts.Count > 0)
+            {
+                Console.WriteLine("Enter the Name of Person you want to delete");
+                string deleteName = Console.ReadLine();
+
+                foreach (var x in contacts)
+                {
+                    if (deleteName.ToLower() == x.firstName.ToLower())
+                    {
+                        Console.WriteLine($"Deleted The {x.firstName} contacts");
+                        contacts.Remove(x);
+                        f = 1;
+                        break;
+                    }
+                }
+                if (f == 0)
+                {
+                    Console.WriteLine("Name is Not in the List!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Address book is Empty!");
+            }
+        }
+
         public static void PrintValues(Person person)
         {
             Console.WriteLine($"First Name: {person.firstName}");
