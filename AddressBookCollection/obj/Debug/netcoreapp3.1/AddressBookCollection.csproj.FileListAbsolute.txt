@@ -1,0 +1,14 @@
+E:\ASP.NET\Day23-AddressBookUsingCollections\AddressBookCollection\bin\Debug\netcoreapp3.1\AddressBookCollection.exe
+E:\ASP.NET\Day23-AddressBookUsingCollections\AddressBookCollection\bin\Debug\netcoreapp3.1\AddressBookCollection.deps.json
+E:\ASP.NET\Day23-AddressBookUsingCollections\AddressBookCollection\bin\Debug\netcoreapp3.1\AddressBookCollection.runtimeconfig.json
+E:\ASP.NET\Day23-AddressBookUsingCollections\AddressBookCollection\bin\Debug\netcoreapp3.1\AddressBookCollection.runtimeconfig.dev.json
+E:\ASP.NET\Day23-AddressBookUsingCollections\AddressBookCollection\bin\Debug\netcoreapp3.1\AddressBookCollection.dll
+E:\ASP.NET\Day23-AddressBookUsingCollections\AddressBookCollection\bin\Debug\netcoreapp3.1\AddressBookCollection.pdb
+E:\ASP.NET\Day23-AddressBookUsingCollections\AddressBookCollection\obj\Debug\netcoreapp3.1\AddressBookCollection.csproj.AssemblyReference.cache
+E:\ASP.NET\Day23-AddressBookUsingCollections\AddressBookCollection\obj\Debug\netcoreapp3.1\AddressBookCollection.GeneratedMSBuildEditorConfig.editorconfig
+E:\ASP.NET\Day23-AddressBookUsingCollections\AddressBookCollection\obj\Debug\netcoreapp3.1\AddressBookCollection.AssemblyInfoInputs.cache
+E:\ASP.NET\Day23-AddressBookUsingCollections\AddressBookCollection\obj\Debug\netcoreapp3.1\AddressBookCollection.AssemblyInfo.cs
+E:\ASP.NET\Day23-AddressBookUsingCollections\AddressBookCollection\obj\Debug\netcoreapp3.1\AddressBookCollection.csproj.CoreCompileInputs.cache
+E:\ASP.NET\Day23-AddressBookUsingCollections\AddressBookCollection\obj\Debug\netcoreapp3.1\AddressBookCollection.dll
+E:\ASP.NET\Day23-AddressBookUsingCollections\AddressBookCollection\obj\Debug\netcoreapp3.1\AddressBookCollection.pdb
+E:\ASP.NET\Day23-AddressBookUsingCollections\AddressBookCollection\obj\Debug\netcoreapp3.1\AddressBookCollection.genruntimeconfig.cache
