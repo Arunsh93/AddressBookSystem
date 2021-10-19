@@ -8,6 +8,7 @@ namespace AddressBookCollection
     {
         public static List<Person> contacts;
         public static List<Person> searchContact = new List<Person>();
+        public static int countCity = 0, countState = 0;
         //Address Book to Dictionary
         public static Dictionary<string, List<Person>> addDictionary = new Dictionary<string, List<Person>>();
         public static void AddContact()
@@ -351,19 +352,40 @@ namespace AddressBookCollection
                 case 1:
                     Console.WriteLine("Enter the name of city in which you want to View");
                     string cityName = Console.ReadLine();
-                    ViewByCityName(cityName);
+                    ViewByCityName(cityName, "View");
                     break;
                 case 2:
                     Console.WriteLine("Enter the State name in which you want to View");
                     string stateName = Console.ReadLine();
-                    ViewByStateName(stateName);
+                    ViewByStateName(stateName, "View");
                     break;
                 default:
                     return;
             }
         }
 
-        public static void ViewByCityName(string cityName)
+        public static void CountContactByStateOrCity()
+        {
+            Console.WriteLine("1. Count by City name \n2. Count by State name \nEnter your option");
+            int searchOption = int.Parse(Console.ReadLine());
+            switch (searchOption)
+            {
+                case 1:
+                    Console.WriteLine("Enter the name of city in which you want to View");
+                    string cityName = Console.ReadLine();
+                    ViewByCityName(cityName, "Count");
+                    break;
+                case 2:
+                    Console.WriteLine("Enter the State name in which you want to View");
+                    string stateName = Console.ReadLine();
+                    ViewByStateName(stateName, "Count");
+                    break;
+                default:
+                    return;
+            }
+        }
+
+        public static void ViewByCityName(string cityName, string check)
         {
             if (addDictionary.Count > 0)
             {
@@ -371,18 +393,26 @@ namespace AddressBookCollection
                 {
                     searchContact = dict.Value.FindAll(x => x.city.Equals(cityName));
                 }
-
-                if (searchContact.Count > 0)
+                if(check.Equals("View"))
                 {
-                    foreach (var x in searchContact)
+                    if (searchContact.Count > 0)
                     {
-                        PrintValues(x);
+                        foreach (var x in searchContact)
+                        {
+                            PrintValues(x);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Person Not Found!");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Person Not Found!");
+                    countCity = searchContact.Count;
+                    Console.WriteLine($"The Total Person in {cityName} are : {countCity}");
                 }
+                
             }
             else
             {
@@ -390,7 +420,7 @@ namespace AddressBookCollection
             }
         }
 
-        public static void ViewByStateName(string stateName)
+        public static void ViewByStateName(string stateName, string check)
         {
             if (addDictionary.Count > 0)
             {
@@ -399,16 +429,24 @@ namespace AddressBookCollection
                     searchContact = dict.Value.FindAll(x => x.state.Equals(stateName));
                 }
 
-                if (searchContact.Count > 0)
+                if (check.Equals("View"))
                 {
-                    foreach (var x in searchContact)
+                    if (searchContact.Count > 0)
                     {
-                        PrintValues(x);
+                        foreach (var x in searchContact)
+                        {
+                            PrintValues(x);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Person Not Found!");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Person Not Found!");
+                    countState = searchContact.Count;
+                    Console.WriteLine($"The Total Person in {stateName} are : {countState}");
                 }
             }
             else
