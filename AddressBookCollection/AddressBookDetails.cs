@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AddressBookCollection
@@ -9,6 +10,7 @@ namespace AddressBookCollection
         public static List<Person> contacts;
         public static List<Person> searchContact = new List<Person>();
         public static int countCity = 0, countState = 0;
+        public static List<Person> SortedList = new List<Person>();
         //Address Book to Dictionary
         public static Dictionary<string, List<Person>> addDictionary = new Dictionary<string, List<Person>>();
         public static void AddContact()
@@ -452,6 +454,26 @@ namespace AddressBookCollection
             else
             {
                 Console.WriteLine("Address Book is Empty!");
+            }
+        }
+
+        public static void SortContacts()
+        {
+            if(addDictionary.Count > 0)
+            {
+                foreach(KeyValuePair<string, List<Person>> dict in addDictionary)
+                {
+                    SortedList = dict.Value.OrderBy(x => x.firstName).ToList();
+                    Console.WriteLine($"****After Sorting {dict.Key} ****");
+                    foreach(var addresBook in SortedList)
+                    {
+                        PrintValues(addresBook);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Address Book is Empty");
             }
         }
 

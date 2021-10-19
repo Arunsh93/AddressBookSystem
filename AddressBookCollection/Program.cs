@@ -10,7 +10,7 @@ namespace AddressBookCollection
 
             while (true)
             {
-                Console.WriteLine("1. Add Member to Contact List \n2. View Members in Contact list \n3. Edit Contact List \n4. Delete Contact \n5 Search Details \n6. View Contact By State Or City \n7 Count Contacts By State or City \n8.Exit");
+                Console.WriteLine("1. Add Member to Contact List \n2. View Members in Contact list \n3. Edit Contact List \n4. Delete Contact \n5 Search Details \n6. View Contact By State Or City \n7 Count Contacts By State or City \n8 Sorted List Of Contacts \n9.Exit");
                 Console.Write("Enter an Option: ");
                 int option = int.Parse(Console.ReadLine());
                 
@@ -38,6 +38,9 @@ namespace AddressBookCollection
                         AddressBookDetails.CountContactByStateOrCity();
                         break;
                     case 8:
+                        AddressBookDetails.SortContacts();
+                        break;
+                    case 9:
                         return;
                 }
             }
