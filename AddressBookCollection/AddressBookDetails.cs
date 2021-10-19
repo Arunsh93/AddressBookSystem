@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace AddressBookCollection
@@ -239,7 +241,6 @@ namespace AddressBookCollection
                 Console.WriteLine("Address book is Empty!");
             }
         }
-
         public static void PrintValues(Person person)
         {
             Console.WriteLine($"First Name: {person.firstName}");
@@ -250,6 +251,80 @@ namespace AddressBookCollection
             Console.WriteLine($"Zip Code  : {person.zip}");
             Console.WriteLine($"Phone Number: {person.phoneNumber}");
             Console.WriteLine($"EmailId   : {person.emailId}");
+        }
+
+        //Write the Address Book into File
+        public static void WriteToFile()
+        {
+            string filePath = @"E:\ASP.NET\Day23-AddressBookUsingCollections\AddressBookCollection\AddressBook.txt";
+
+            try
+            {
+                if (addDictionary.Count > 0)
+                {
+                    File.WriteAllText(filePath, string.Empty);
+
+                    foreach (KeyValuePair<string, List<Person>> dict in addDictionary)
+                    {
+                        File.AppendAllText(filePath, $"{dict.Key}\n");
+                        foreach (var addressBook in dict.Value)
+                        {
+                            string text = $"{addressBook.firstName},{addressBook.lastName},{addressBook.address},{addressBook.city},{addressBook.state},{addressBook.zip},{addressBook.phoneNumber},{addressBook.emailId}";
+                            File.AppendAllText(filePath, text);
+                        }
+                    }
+                    Console.WriteLine("Successfully Write into File!");
+                }
+                else
+                {
+                    Console.WriteLine("Address Book is Empty!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        //Read from File
+        public static void ReadFromFile()
+        {
+            string filePath = @"E:\ASP.NET\Day23-AddressBookUsingCollections\AddressBookCollection\AddressBook.txt";
+
+            try
+            {
+                string[] lines = File.ReadAllLines(filePath);
+                var currentAbName = lines[0];
+                contacts = new List<Person>();
+                foreach(string str in lines.Skip(1))
+                {
+                    if(str.Contains(","))
+                    {
+                        Person person = new Person();
+                        string[] line = str.Split(",");
+                        person.firstName = line[0];
+                        person.lastName = line[1];
+                        person.address = line[2];
+                        person.city = line[3];
+                        person.state = line[4];
+                        person.zip = int.Parse(line[5]);
+                        person.phoneNumber = line[6];
+                        person.emailId = line[7];
+                        contacts.Add(person);
+                    }
+                    else
+                    {
+                        addDictionary.Add(currentAbName, contacts);
+                        currentAbName = str;
+                        contacts = new List<Person>();
+                    }
+                }
+                addDictionary.Add(currentAbName, contacts);
+                Console.WriteLine("Successfully Added!");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
