@@ -42,8 +42,29 @@ namespace AddressBookCollection
             while(numOfContacts > 0)
             {
                 Person person = new Person();
-                Console.WriteLine("Enter First name: ");
-                person.firstName = Console.ReadLine();
+                while(true)
+                {
+                    Console.WriteLine("Enter First name: ");
+                    string firstName = Console.ReadLine();
+                    if(contacts.Count > 0)
+                    {
+                        var x = contacts.Find(x => x.firstName.Equals(firstName.ToLower()));
+                        if(x != null)
+                        {
+                            Console.WriteLine("Entering name is Already Exist!");
+                        }
+                        else
+                        {
+                            person.firstName = firstName;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        person.firstName = firstName;
+                        break;
+                    }                   
+                }
                 Console.WriteLine("Enter Last name: ");
                 person.lastName = Console.ReadLine();
                 Console.WriteLine("Enter Address: ");
