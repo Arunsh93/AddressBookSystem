@@ -7,9 +7,9 @@ namespace AddressBookCollection
     class AddressBookDetails
     {
         public static List<Person> contacts;
+        public static List<Person> searchContact = new List<Person>();
         //Address Book to Dictionary
         public static Dictionary<string, List<Person>> addDictionary = new Dictionary<string, List<Person>>();
-
         public static void AddContact()
         {
             string addressBookName;
@@ -261,6 +261,86 @@ namespace AddressBookCollection
             }
         }
 
+        public static void SearchDetail()
+        {
+            string personName;
+            Console.WriteLine("1. Search by City name \n2. Search by State name \nEnter your option");
+            int searchOption = int.Parse(Console.ReadLine());
+            switch (searchOption)
+            {
+                case 1:
+                    Console.WriteLine("Enter the name of city in which you want to search");
+                    string cityName = Console.ReadLine();
+                    Console.WriteLine("Enter the name of person you want to search");
+                    personName = Console.ReadLine();
+                    SearchByCityName(cityName, personName);
+                    break;
+                case 2:
+                    Console.WriteLine("Enter the State name in which you want to search");
+                    string stateName = Console.ReadLine();
+                    Console.WriteLine("Enter the name of person you want to search");
+                    personName = Console.ReadLine();
+                    
+                    SearchByStateName(stateName, personName);
+                    break;
+                default:
+                    return;
+            }
+        }
+
+        public static void SearchByCityName(string cityName, string personName)
+        {
+            if(addDictionary.Count>0)
+            {
+                foreach(KeyValuePair<string, List<Person>> dict in addDictionary)
+                {
+                    searchContact = dict.Value.FindAll(x => x.firstName.Equals(personName) && x.city.Equals(cityName));
+                }
+
+                if(searchContact.Count > 0)
+                {
+                    foreach(var x in searchContact)
+                    {
+                        PrintValues(x);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Person Not Found!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Address Book is Empty!");
+            }
+        }
+
+        public static void SearchByStateName(string stateName, string personName)
+        {
+            if (addDictionary.Count > 0)
+            {
+                foreach (KeyValuePair<string, List<Person>> dict in addDictionary)
+                {
+                    searchContact = dict.Value.FindAll(x => x.firstName.Equals(personName) && x.state.Equals(stateName));
+                }
+
+                if (searchContact.Count > 0)
+                {
+                    foreach (var x in searchContact)
+                    {
+                        PrintValues(x);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Person Not Found!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Address Book is Empty!");
+            }
+        }
         public static void PrintValues(Person person)
         {
             Console.WriteLine($"First Name: {person.firstName}");

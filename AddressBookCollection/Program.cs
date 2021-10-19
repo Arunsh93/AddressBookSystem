@@ -10,7 +10,7 @@ namespace AddressBookCollection
 
             while (true)
             {
-                Console.WriteLine("1. Add Member to Contact List \n2. View Members in Contact list \n3. Edit Contact List \n4. Delete Contact \n5.Exit");
+                Console.WriteLine("1. Add Member to Contact List \n2. View Members in Contact list \n3. Edit Contact List \n4. Delete Contact \n5 Search Details \n6.Exit");
                 Console.Write("Enter an Option: ");
                 int option = int.Parse(Console.ReadLine());
                 switch (option)
@@ -28,6 +28,9 @@ namespace AddressBookCollection
                         AddressBookDetails.DeleteContact();
                         break;
                     case 5:
+                        AddressBookDetails.SearchDetail();
+                        break;
+                    case 6:
                         return;
                 }
             }
