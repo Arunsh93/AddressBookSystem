@@ -1,5 +1,8 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -7,6 +10,7 @@ namespace AddressBookCollection
 {
     class AddressBookDetails
     {
+        public static string csvFilePath = @"E:\ASP.NET\Day23-AddressBookUsingCollections\AddressBookCollection\ExportAddressBook.csv";
         public static List<Person> contacts;
         public static List<Person> searchContact = new List<Person>();
         public static int countCity = 0, countState = 0;
@@ -18,13 +22,13 @@ namespace AddressBookCollection
             string addressBookName;
             contacts = new List<Person>();
 
-            while(true)
+            while (true)
             {
                 Console.WriteLine("Enter the Name of Address Book");
                 addressBookName = Console.ReadLine();
-                if(addDictionary.Count > 0)
+                if (addDictionary.Count > 0)
                 {
-                    if(addDictionary.ContainsKey(addressBookName))
+                    if (addDictionary.ContainsKey(addressBookName))
                     {
                         Console.WriteLine("This name Address Book is already Exist!");
                     }
@@ -42,17 +46,17 @@ namespace AddressBookCollection
             Console.WriteLine("Enter Number Of Contacts you want to add");
             int numOfContacts = int.Parse(Console.ReadLine());
 
-            while(numOfContacts > 0)
+            while (numOfContacts > 0)
             {
                 Person person = new Person();
-                while(true)
+                while (true)
                 {
                     Console.WriteLine("Enter First name: ");
                     string firstName = Console.ReadLine();
-                    if(contacts.Count > 0)
+                    if (contacts.Count > 0)
                     {
                         var x = contacts.Find(x => x.firstName.Equals(firstName.ToLower()));
-                        if(x != null)
+                        if (x != null)
                         {
                             Console.WriteLine("Entering name is Already Exist!");
                         }
@@ -66,7 +70,7 @@ namespace AddressBookCollection
                     {
                         person.firstName = firstName;
                         break;
-                    }                   
+                    }
                 }
                 Console.WriteLine("Enter Last name: ");
                 person.lastName = Console.ReadLine();
@@ -120,10 +124,10 @@ namespace AddressBookCollection
             if (addDictionary.Count > 0)
             {
                 Console.WriteLine("*****Yours Contact List*****");
-                foreach(KeyValuePair<string, List<Person>> dictionary in addDictionary)
+                foreach (KeyValuePair<string, List<Person>> dictionary in addDictionary)
                 {
                     Console.WriteLine($"================{dictionary.Key}=================");
-                    foreach(var addressBook in dictionary.Value)
+                    foreach (var addressBook in dictionary.Value)
                     {
                         PrintValues(addressBook);
                         Console.WriteLine("**********************************");
@@ -283,7 +287,7 @@ namespace AddressBookCollection
                     string stateName = Console.ReadLine();
                     Console.WriteLine("Enter the name of person you want to search");
                     personName = Console.ReadLine();
-                    
+
                     SearchByStateName(stateName, personName);
                     break;
                 default:
@@ -293,16 +297,16 @@ namespace AddressBookCollection
         //Search by City names
         public static void SearchByCityName(string cityName, string personName)
         {
-            if(addDictionary.Count>0)
+            if (addDictionary.Count > 0)
             {
-                foreach(KeyValuePair<string, List<Person>> dict in addDictionary)
+                foreach (KeyValuePair<string, List<Person>> dict in addDictionary)
                 {
                     searchContact = dict.Value.FindAll(x => x.firstName.Equals(personName) && x.city.Equals(cityName));
                 }
 
-                if(searchContact.Count > 0)
+                if (searchContact.Count > 0)
                 {
-                    foreach(var x in searchContact)
+                    foreach (var x in searchContact)
                     {
                         PrintValues(x);
                     }
@@ -395,7 +399,7 @@ namespace AddressBookCollection
                 {
                     searchContact = dict.Value.FindAll(x => x.city.Equals(cityName));
                 }
-                if(check.Equals("View"))
+                if (check.Equals("View"))
                 {
                     if (searchContact.Count > 0)
                     {
@@ -414,7 +418,7 @@ namespace AddressBookCollection
                     countCity = searchContact.Count;
                     Console.WriteLine($"The Total Person in {cityName} are : {countCity}");
                 }
-                
+
             }
             else
             {
@@ -484,7 +488,7 @@ namespace AddressBookCollection
             {
                 foreach (KeyValuePair<string, List<Person>> dict in addDictionary)
                 {
-                    switch(check)
+                    switch (check)
                     {
                         case "name":
                             SortedList = dict.Value.OrderBy(x => x.firstName).ToList();
@@ -500,7 +504,7 @@ namespace AddressBookCollection
                             break;
                     }
                     Console.WriteLine($"****After Sorting {dict.Key} ****");
-                    foreach(var addressBook in SortedList)
+                    foreach (var addressBook in SortedList)
                     {
                         PrintValues(addressBook);
                     }
@@ -522,6 +526,44 @@ namespace AddressBookCollection
             Console.WriteLine($"Zip Code  : {person.zip}");
             Console.WriteLine($"Phone Number: {person.phoneNumber}");
             Console.WriteLine($"EmailId   : {person.emailId}");
+        }
+
+        //Write the Contacts Into the CSV File
+        public static void WriteIntoCSVFile()
+        {       
+            try
+            {
+                if(addDictionary.Count > 0)
+                {
+                    using (StreamWriter writer = new StreamWriter(csvFilePath))
+                    using (CsvWriter csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                    {
+                        foreach(KeyValuePair<string, List<Person>> dict in addDictionary)
+                        {
+                            List<Person> contactrecords = dict.Value.ToList();
+                            csv.WriteRecords(contactrecords);
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        //Read From CSV file 
+        public static void ReadFromCSV()
+        {
+            using (StreamReader reader = new StreamReader(csvFilePath))
+            using (CsvReader csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                Console.WriteLine("Below Contacts are Read from CSV File");
+                List<Person> contactRecords = csv.GetRecords<Person>().ToList();
+                foreach(Person person in contactRecords)
+                {
+                    Console.WriteLine(person.ToString());
+                }
+            }
         }
     }
 }
