@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AddressBookDataBase
+namespace AddressBook_DataBase
 {
     public class AddressBookModel
     {

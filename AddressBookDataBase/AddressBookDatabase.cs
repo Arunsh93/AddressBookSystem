@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace AddressBookDataBase
+namespace AddressBook_DataBase
 {
     public class AddressBookDatabase
     {
@@ -216,6 +217,47 @@ namespace AddressBookDataBase
                         connection.Close();
                     }
                     return true;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public int AddNewContactsWithThread(List<AddressBookModel> model)
+        {
+            try
+            {
+                AddressBookModel addressBookModel = new AddressBookModel();
+                using (this.connection)
+                {
+                    foreach (AddressBookModel model1 in model)
+                    {
+                        Task thread = new Task(() =>
+                        {
+                            SqlCommand sqlCommand = new SqlCommand("SpAddNewContacts", connection);
+                            sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                            sqlCommand.Parameters.AddWithValue("@FirstName", model1.Firstname);
+                            sqlCommand.Parameters.AddWithValue("@LastName", model1.Lastname);
+                            sqlCommand.Parameters.AddWithValue("@Address", model1.Address);
+                            sqlCommand.Parameters.AddWithValue("@City", model1.City);
+                            sqlCommand.Parameters.AddWithValue("@State", model1.State);
+                            sqlCommand.Parameters.AddWithValue("@ZipCode", model1.ZipCode);
+                            sqlCommand.Parameters.AddWithValue("@PhoneNumber", model1.PhoneNumber);
+                            sqlCommand.Parameters.AddWithValue("@EmailId", model1.EmailId);
+                            sqlCommand.Parameters.AddWithValue("@AddressBookName", model1.AddressBookName);
+                            sqlCommand.Parameters.AddWithValue("@Type", model1.Type);
+                            sqlCommand.Parameters.AddWithValue("@AddedDate", model1.AddedDate);
+
+                            connection.Open();
+                            var Result = sqlCommand.ExecuteNonQuery();
+                            connection.Close();
+                        });
+                        thread.Start();
+                    }
+                    Console.WriteLine(model.Count);
+                    return model.Count;
                 }
             }
             catch (Exception e)

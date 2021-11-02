@@ -459,9 +459,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\ASP.NET\\Day23-AddressBookUsingCollections\\AddressBookDataBase\\AddressBookDataBase.csproj",
-      "projectName": "AddressBookDataBase",
-      "projectPath": "E:\\ASP.NET\\Day23-AddressBookUsingCollections\\AddressBookDataBase\\AddressBookDataBase.csproj",
+      "projectUniqueName": "E:\\ASP.NET\\Day23-AddressBookUsingCollections\\AddressBookDataBase\\AddressBook_DataBase.csproj",
+      "projectName": "AddressBook_DataBase",
+      "projectPath": "E:\\ASP.NET\\Day23-AddressBookUsingCollections\\AddressBookDataBase\\AddressBook_DataBase.csproj",
       "packagesPath": "C:\\Users\\Arun Hosur\\.nuget\\packages\\",
       "outputPath": "E:\\ASP.NET\\Day23-AddressBookUsingCollections\\AddressBookDataBase\\obj\\",
       "projectStyle": "PackageReference",
