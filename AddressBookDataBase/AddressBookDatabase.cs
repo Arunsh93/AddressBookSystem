@@ -58,5 +58,42 @@ namespace AddressBookDataBase
                 this.connection.Close();
             }
         }
+
+        public bool UpdateContact(AddressBookModel model)
+        {
+            try
+            {
+                AddressBookModel addressBookModel = new AddressBookModel();
+                using (this.connection)
+                {
+                    SqlCommand sqlCommand = new SqlCommand("SpAddressBookDetails", connection);
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@FirstName", model.Firstname);
+                    sqlCommand.Parameters.AddWithValue("@LastName", model.Lastname);
+                    sqlCommand.Parameters.AddWithValue("@Address", model.Address);
+                    sqlCommand.Parameters.AddWithValue("@City", model.City);
+                    sqlCommand.Parameters.AddWithValue("@State", model.State);
+                    sqlCommand.Parameters.AddWithValue("@ZipCode", model.ZipCode);
+                    sqlCommand.Parameters.AddWithValue("@PhoneNumber", model.PhoneNumber);
+                    sqlCommand.Parameters.AddWithValue("@EmailId", model.EmailId);
+                    sqlCommand.Parameters.AddWithValue("@AddressBookName", model.AddressBookName);
+                    sqlCommand.Parameters.AddWithValue("@Type", model.Type);
+
+                    connection.Open();
+                    var Result = sqlCommand.ExecuteNonQuery();
+                    Console.WriteLine("Contact Updated Successfully!");
+                    connection.Close();
+                    if(Result == 0)
+                    {
+                        return false;
+                    }
+                    return true;
+                }
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }
