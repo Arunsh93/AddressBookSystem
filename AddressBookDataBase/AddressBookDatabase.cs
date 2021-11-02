@@ -45,11 +45,11 @@ namespace AddressBookDataBase
                         }
                         Console.WriteLine("New Contacts Added Successfully!");
                         dataReader.Close();
-                    }                     
+                    }
                 }
                 return count;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
@@ -83,14 +83,14 @@ namespace AddressBookDataBase
                     var Result = sqlCommand.ExecuteNonQuery();
                     Console.WriteLine("Contact Updated Successfully!");
                     connection.Close();
-                    if(Result == 0)
+                    if (Result == 0)
                     {
                         return false;
                     }
                     return true;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
@@ -144,5 +144,48 @@ namespace AddressBookDataBase
                 this.connection.Close();
             }
         }
-    }
+
+        public int RetriveCountByCityOrState()
+        {
+            AddressBookModel addressBookModel = new AddressBookModel();
+            using (this.connection)
+            {
+                //SqlCommand sqlCommand = new SqlCommand("SpRetriveContactsByCityOrState", connection);
+                //sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                //sqlCommand.Parameters.AddWithValue("@State", addressBookModel.Id);
+
+                string RetriveQuery = @"Select * From AddressBookTable Where City = 'Bangalore' OR State = 'Karnataka';";
+                SqlCommand sqlCommand = new SqlCommand(RetriveQuery, connection);
+                int Count = 0;
+                connection.Open();
+                SqlDataReader dataReader = sqlCommand.ExecuteReader();
+                if(dataReader.HasRows)
+                {
+                    Console.WriteLine("NUMBER OF CONTACTS BELONGS TO CITY OR STATE!");
+                    while (dataReader.Read())
+                    {
+                        Count++;
+                        addressBookModel.Id = dataReader.GetInt32(0);
+                        addressBookModel.Firstname = dataReader.GetString(1);
+                        addressBookModel.Lastname = dataReader.GetString(2);
+                        addressBookModel.Address = dataReader.GetString(3);
+                        addressBookModel.City = dataReader.GetString(4);
+                        addressBookModel.State = dataReader.GetString(5);
+                        addressBookModel.ZipCode = dataReader.GetString(6);
+                        addressBookModel.PhoneNumber = dataReader.GetString(7);
+                        addressBookModel.EmailId = dataReader.GetString(8);
+                        addressBookModel.AddressBookName = dataReader.GetString(9);
+                        addressBookModel.Type = dataReader.GetString(10);
+                        addressBookModel.AddedDate = dataReader.GetDateTime(11);
+                        Console.WriteLine("{0}, {1}, {2}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}", addressBookModel.Id, addressBookModel.Firstname, addressBookModel.Lastname,
+                                            addressBookModel.Address, addressBookModel.City, addressBookModel.State, addressBookModel.ZipCode, addressBookModel.PhoneNumber,
+                                            addressBookModel.EmailId, addressBookModel.AddressBookName, addressBookModel.Type, addressBookModel.AddedDate);
+                    }
+                    Console.WriteLine("NUMBER OF CONTACTS BELONGS TO CITY OR STATE : " + Count);
+                }
+                return Count;
+            }
+        }
+            
+    }   
 }
