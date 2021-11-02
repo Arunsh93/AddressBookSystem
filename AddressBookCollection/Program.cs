@@ -7,10 +7,13 @@ namespace AddressBookCollection
         static void Main(string[] args)
         {
             Console.WriteLine("****Welcome to Address Book Using Collection****");
-
+           
             while (true)
             {
-                Console.WriteLine("1. Add Member to Contact List \n2. View Members in Contact list \n3. Edit Contact List \n4. Delete Contact \n5 Search Details \n6. View Contact By State Or City \n7 Count Contacts By State or City \n8. Sort By Properties \n9.Exit");
+                Console.WriteLine("1. Add Member to Contact List \n2. View Members in Contact list \n3. Edit Contact List \n4. Delete Contact " +
+                                  "\n5 Search Details \n6. View Contact By State Or City \n7 Count Contacts By State or City " +
+                                  "\n8. Sort By Properties \n9. Write the Contacts into CSV File " +
+                                  "\n10. Read From CSV File \n11.Exit");
                 Console.Write("Enter an Option: ");
                 int option = int.Parse(Console.ReadLine());
                 
@@ -41,6 +44,12 @@ namespace AddressBookCollection
                         AddressBookDetails.SortListByProperties();
                         break;
                     case 9:
+                        AddressBookDetails.WriteIntoCSVFile();
+                        break;
+                    case 10:
+                        AddressBookDetails.ReadFromCSV();
+                        break;
+                    case 11:
                         return;
                 }
             }
