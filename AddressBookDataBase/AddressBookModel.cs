@@ -17,5 +17,6 @@ namespace AddressBookDataBase
         public string EmailId { get; set; }
         public string AddressBookName { get; set; }
         public string Type { get; set; }
+        public DateTime AddedDate { get; set; }
     }
 }

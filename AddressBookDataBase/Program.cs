@@ -21,9 +21,11 @@ namespace AddressBookDataBase
             addressBook.AddressBookName = "Book2";
             addressBook.Type = "Friends";
 
-            addressBookDataBase.UpdateContact(addressBook);
+            //addressBookDataBase.UpdateContact(addressBook);
 
             //addressBookDataBase.GetPersonDetailsfromDatabase();
+
+            addressBookDataBase.RetriveContactsInPurticularPeriod();
         }
     }
 }
